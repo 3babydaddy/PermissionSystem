@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tf.base.notification.persistence.NotificationobjectMapper" >
+  <resultMap id="BaseResultMap" type="com.tf.base.notification.domain.Notificationobject" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="systemid" property="systemid" jdbcType="INTEGER" />
+    <result column="systemip" property="systemip" jdbcType="VARCHAR" />
+    <result column="systemport" property="systemport" jdbcType="VARCHAR" />
+    <result column="notificationUrl" property="notificationUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, systemid, systemip, systemport, notificationUrl
+  </sql>
+  
+  <select id="queryBaseList" resultType="java.util.Map">
+  	select nt.id,
+  	       si.name,
+  	       nt.systemip,
+  	       nt.systemport,
+  	       nt.notificationUrl
+  	from notificationobject nt,
+  	     systeminfo si
+  	<where>
+  		nt.systemid = si.id
+  		<if test="params.id != '' and params.id != null">
+  			and nt.id = #{params.id}
+  		</if>
+  		<if test="params.systemid != '' and params.systemid != null">
+  			and nt.systemid = #{params.systemid}
+   		</if>
+   		<if test="params.systemip != '' and params.systemip != null">
+   			and nt.systemip = #{params.systemip}
+   		</if>
+   		<if test="params.systemport != '' and params.systemport != null">
+   		    and nt.systemport = #{params.systemport}
+   		</if>
+   		<if test="params.notificationUrl != '' and params.notificationUrl != null">
+   			and nt.notificationUrl = #{params.notificationUrl}
+   		</if>
+  	</where>
+  	LIMIT #{start},#{rows} 
+  </select>
+  
+   <select id="queryBaseListCount" resultType="java.lang.Integer">
+  	select count(*)
+  	from notificationobject nt,
+  	     systeminfo si
+  	<where>
+  		nt.systemid = si.id
+  		<if test="params.id != '' and params.id != null">
+  			and nt.id = #{params.id}
+  		</if>
+  		<if test="params.systemid != '' and params.systemid != null">
+  			and nt.systemid = #{params.systemid}
+   		</if>
+   		<if test="params.systemip != '' and params.systemip != null">
+   			and nt.systemip = #{params.systemip}
+   		</if>
+   		<if test="params.systemport != '' and params.systemport != null">
+   		    and nt.systemport = #{params.systemport}
+   		</if>
+   		<if test="params.notificationUrl != '' and params.notificationUrl != null">
+   			and nt.notificationUrl = #{params.notificationUrl}
+   		</if>
+  	</where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultType="com.tf.base.notification.domain.Notificationobject">
+  	select * 
+  	from notificationobject
+  	<where>
+    	1 = 1
+    	<if test="params.id != '' and params.id != null">
+    		and id = #{params.id}
+    	</if> 
+    	<if test="params.systemid != '' and params.systemid != null">
+    		and systemid = #{params.systemid}
+    	</if>
+  	</where>
+  </select>
+  
+  <insert id="insert">
+  	insert into notificationobject(systemid,systemip,systemport,notificationUrl) values(
+  	    #{params.systemid},
+  	    #{params.systemip},
+  	    #{params.systemport},
+  	    #{params.notificationUrl}
+  	)
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective">
+  	update notificationobject
+  	<set>
+  		<if test="params.systemid != '' and params.systemid != null">
+			systemid = #{params.systemid}  		
+  		</if>
+  		<if test="params.systemip != '' and params.systemip != null">
+  		   ,systemip = #{params.systemip} 
+  		</if>
+  		<if test="params.systemport != '' and params.systemport != null">
+  			,systemport = #{params.systemport}
+  		</if>
+  		<if test="params.notificationUrl != null and params.notificationUrl != ''">
+  			,notificationUrl = #{params.notificationUrl}
+  		</if>
+  	</set>
+  	<where>
+  		<if test="params.id != '' and params.id != null">
+  			id = #{params.id}
+  		</if>
+  	</where>
+  </update>
+  
+  <delete id="delete">
+  	delete from notificationobject
+  	<where>
+  		id = #{params.id}
+  	</where>
+  	
+  </delete>
+  
+</mapper>

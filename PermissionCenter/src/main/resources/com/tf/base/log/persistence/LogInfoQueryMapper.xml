@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.log.persistence.LogInfoQueryMapper">
+
+	
+	<select id="logQuery" resultType="com.tf.base.common.domain.LogInfo">
+		SELECT * FROM loginfo t
+		<where>
+			<if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if> 
+			<if test="params.systemid != ''  and params.systemid !=null ">  
+	            and t.systemid = #{params.systemid}  
+	        </if> 
+			<if test="params.userid != ''  and params.userid !=null ">  
+	            and t.userid = #{params.userid}  
+	        </if> 
+			<if test="params.ip != ''  and params.ip !=null ">  
+	            and t.ip = #{params.ip}  
+	        </if> 
+			<if test="params.type != ''  and params.type !=null ">  
+	            and t.type = #{params.type}  
+	        </if> 
+			<if test="params.description != ''  and params.description !=null ">  
+	            and t.description like CONCAT('%',#{params.description},'%' )  
+	        </if> 
+			<if test="params.operationTimeStart != ''  and params.operationTimeStart !=null ">  
+	            and t.createtime >= #{params.operationTimeStart}  
+	        </if> 
+			<if test="params.operationTimeEnd != ''  and params.operationTimeEnd !=null ">  
+	            and t.createtime &lt;= #{params.operationTimeEnd}  
+	        </if> 
+			<if test="params.creator != ''  and params.creator !=null ">  
+	            and t.creator = #{params.creator}  
+	        </if> 
+		</where>
+		 ORDER BY  t.createtime desc
+  		 LIMIT #{start},#{rows} 
+	</select>
+    <select id="logQueryCount" resultType="int">
+		SELECT count(*) FROM loginfo t
+		<where>
+			<if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if> 
+			<if test="params.systemid != ''  and params.systemid !=null ">  
+	            and t.systemid = #{params.systemid}  
+	        </if> 
+			<if test="params.userid != ''  and params.userid !=null ">  
+	            and t.userid = #{params.userid}  
+	        </if> 
+			<if test="params.ip != ''  and params.ip !=null ">  
+	            and t.ip = #{params.ip}  
+	        </if> 
+			<if test="params.type != ''  and params.type !=null ">  
+	            and t.type = #{params.type}  
+	        </if> 
+			<if test="params.description != ''  and params.description !=null ">  
+	            and t.description like concat(concat('%',#{params.description}),'%')  
+	        </if> 
+			<if test="params.createtime != ''  and params.createtime !=null ">  
+	            and t.createtime = #{params.createtime}  
+	        </if> 
+			<if test="params.creator != ''  and params.creator !=null ">  
+	            and t.creator = #{params.creator}  
+	        </if> 
+		</where>
+	</select>
+</mapper>

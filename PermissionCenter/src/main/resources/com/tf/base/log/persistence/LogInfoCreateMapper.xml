@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.log.persistence.LogInfoCreateMapper">
+
+	
+	<insert id="saveLog" parameterType="LogInfo">
+		
+		INSERT INTO loginfo (
+			systemid,
+			userid,
+			ip,
+			type,
+			description,
+			createtime,
+			creator
+    	) 
+    	VALUES 
+    	(
+    	#{systemid,jdbcType=INTEGER},
+    	#{userid,jdbcType=INTEGER},
+    	#{ip,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		 #{creator,jdbcType=VARCHAR}
+		)
+	</insert>
+    
+</mapper>

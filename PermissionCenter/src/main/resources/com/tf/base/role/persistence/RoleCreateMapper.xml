@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.role.persistence.RoleCreateMapper">
+
+	<insert id="insertRoleInfo" parameterType="RoleInfo"  useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO roleinfo (
+			name,
+			systemid,
+			avail
+    	) 
+    	VALUES 
+    	(
+		 #{name,jdbcType=VARCHAR},
+		 #{systemid,jdbcType=VARCHAR},
+		 #{avail,jdbcType=VARCHAR}
+		)
+    </insert>
+    
+    <insert id="insertRoleResouces">
+    	INSERT INTO roleresource (
+			resourceid,
+			roleid,
+			systemid
+    	) 
+    	VALUES 
+    	<foreach item="item" index="index" collection="infos" open="(" separator="),(" close=")">
+             #{item.resourceid,jdbcType=VARCHAR},
+			 #{role,jdbcType=VARCHAR},
+			  #{system,jdbcType=VARCHAR}
+         </foreach>
+    </insert>
+    
+   	<delete id="deleteRoleResouces">
+        DELETE
+          FROM roleresource
+          WHERE  roleid = #{role,jdbcType=NUMERIC}
+                 AND systemid =  #{system,jdbcType=NUMERIC}
+    </delete>
+    
+</mapper>

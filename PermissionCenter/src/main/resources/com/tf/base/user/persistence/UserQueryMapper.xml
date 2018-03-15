@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.user.persistence.UserQueryMapper">
+	<sql id="queryByLoginDepartmentId">
+		<if test="params.isAdmin == '0'.toString() ">
+		  <if test="params.loginDepartment != ''  and params.loginDepartment!=null ">  
+		    AND INSTR(
+			    getChildList (#{params.loginDepartment}),
+			    t.`department`
+			  )
+			  and t.isAdmin != '1'
+			</if>
+		  </if>
+
+	</sql>
+	<sql id="withSystemIdQuery">
+		<if test="params.systemid != ''  and params.systemid!=null ">  
+			
+		</if>
+	</sql>
+	<select id="getUserInfo"  resultType="UserInfo">
+		SELECT t.id,
+					t.username,
+					t.showname,
+					t.department ,
+					t.avail,
+					t.isAdmin
+		FROM userinfo t
+		   <where> 
+		 	1=1 
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department!=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username LIKE  CONCAT('%',#{params.username},'%')
+	        </if>  
+	         <if test="params.showname != '' and params.showname!=null">  
+	          	and t.showname LIKE CONCAT('%',#{params.showname},'%' )
+	        </if>
+	         <if test="params.avail != ''  and params.avail!=null ">  
+	            and t.avail = #{params.avail}  
+	        </if>
+	            <include refid="queryByLoginDepartmentId"/>
+	        </where>
+  ORDER BY  t.id desc
+  		 LIMIT #{start},#{params.rows} 
+	</select>
+	
+	<select id="getUserCount" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM userinfo t
+		 <where> 
+		 	1=1
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department!=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username LIKE  CONCAT('%',#{params.username},'%')
+	        </if>  
+	         <if test="params.showname != '' and params.showname!=null">  
+	          	and t.showname LIKE CONCAT('%',#{params.showname},'%' )
+	        </if>
+	         <if test="params.avail != ''  and params.avail!=null ">  
+	            and t.avail = #{params.avail}  
+	        </if>
+	        	<include refid="queryByLoginDepartmentId"/>
+	        </where>
+	</select>
+	<select id="findUserInfoByParams"  resultType="UserInfo">
+		SELECT t.id,
+					t.username,
+					t.showname,
+					t.department ,
+					t.avail,
+					t.isAdmin
+		FROM userinfo t
+		   <where> 
+		 	1=1 
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department!=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username LIKE  CONCAT('%',#{params.username},'%')
+	        </if>  
+	         <if test="params.showname != '' and params.showname!=null">  
+	          	and t.showname LIKE CONCAT('%',#{params.showname},'%' )
+	        </if>
+	         <if test="params.avail != ''  and params.avail!=null ">  
+	            and t.avail = #{params.avail}  
+	        </if>
+	        </where>
+  		ORDER BY  t.id desc
+	</select>
+	<select id="findUserInfoByName"  resultType="UserInfo">
+		SELECT t.id,
+					t.username,
+					t.showname,
+					t.password,
+					t.department ,
+					t.avail,
+					t.isAdmin,
+					t.encPassword 
+		FROM userinfo t
+		   <where> 
+		 	1=1
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username = #{params.username}
+	        </if>  
+	        	<include refid="queryByLoginDepartmentId"/>
+	        </where>
+	</select>
+	<select id="findUserInfoByNameLike"  resultType="UserInfo">
+		SELECT t.id,
+					t.username,
+					t.showname,
+					t.password,
+					t.department ,
+					t.avail,
+					t.isAdmin,
+					t.encPassword
+		FROM userinfo t
+		   <where> 
+		 	1=1
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username LIKE  CONCAT('%',#{params.username},'%')
+	        </if>  
+	        	<include refid="queryByLoginDepartmentId"/>
+	        </where>
+	</select>
+	
+	<select id="getUserInfoWithLoginInfo"  resultType="UserInfo">
+		SELECT 
+			  t.id,
+			  t.username,
+			  t.showname,
+			  t.department,
+			  t.avail,
+			  t.isAdmin,
+			  di.`name` AS departmentShow,
+			  t.tel
+			FROM
+			  userinfo t 
+			  LEFT JOIN departmentinfo di ON t.`department` = di.`id`
+				
+		   <where> 
+		 	1=1 
+		 	
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department!=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username LIKE  CONCAT('%',#{params.username},'%')
+	        </if>  
+	         <if test="params.showname != '' and params.showname!=null">  
+	          	and t.showname LIKE CONCAT('%',#{params.showname},'%' )
+	        </if>
+	         <if test="params.avail != ''  and params.avail!=null ">  
+	            and t.avail = #{params.avail}  
+	        </if>
+	        	AND EXISTS (SELECT 1  FROM usersys us WHERE  us.`userid` = t.`id`
+	         <if test="params.systemid != ''  and params.systemid!=null ">
+	         		AND us.`sysid` = #{params.systemid}
+	        </if>
+	        	)
+	            <include refid="queryByLoginDepartmentId"/>
+	        </where>
+  		 ORDER BY  t.id desc
+  		 LIMIT #{start},#{params.rows} 
+	</select>
+	
+	<select id="getUserCountWithLoginInfo" resultType="java.lang.Integer">
+		SELECT count(*)
+			FROM
+			  userinfo t 
+			  LEFT JOIN departmentinfo di ON t.`department` = di.`id`
+		 <where> 
+		 	1=1
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id = #{params.id}  
+	        </if>  
+	        <if test="params.department != ''  and params.department!=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username LIKE  CONCAT('%',#{params.username},'%')
+	        </if>  
+	         <if test="params.showname != '' and params.showname!=null">  
+	          	and t.showname LIKE CONCAT('%',#{params.showname},'%' )
+	        </if>
+	         <if test="params.avail != ''  and params.avail!=null ">  
+	            and t.avail = #{params.avail}  
+	        </if>
+	        	AND EXISTS (SELECT 1  FROM usersys us WHERE  us.`userid` = t.`id`
+	         <if test="params.systemid != ''  and params.systemid!=null ">
+	         		AND us.`sysid` = #{params.systemid}
+	        </if>
+	        	)
+	        	<include refid="queryByLoginDepartmentId"/>
+	        </where>
+	</select>
+	<select id="findUserInfoByNameAndNotEQID"  resultType="UserInfo">
+		SELECT t.id,
+					t.username,
+					t.showname,
+					t.password,
+					t.department ,
+					t.avail,
+					t.isAdmin,
+					t.encPassword 
+		FROM userinfo t
+		   <where> 
+		 	1=1
+	       <if test="params.id != ''  and params.id!=null ">  
+	            and t.id != #{params.id}
+	        </if>  
+	        <if test="params.department != ''  and params.department=null ">  
+	           	and t.department = #{params.department}  
+	        </if>  
+	       
+	        <if test="params.username != ''  and params.username!=null ">  
+	           	and t.username = #{params.username}
+	        </if>  
+	        	<include refid="queryByLoginDepartmentId"/>
+	        </where>
+	</select>
+	<select id="findUserInfoById" parameterType="string" resultType="UserInfo">
+	SELECT t.id,
+					t.username,
+					t.showname,
+					t.password,
+					t.department ,
+					t.avail,
+					t.isAdmin,
+					t.encPassword 
+		FROM userinfo t where t.id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 根据 roleId 查询用户列表 -->
+	<select id="findUserInfoByRoleId" parameterType="java.util.Map" resultType="UserInfo">
+		SELECT t.id,
+					t.username,
+					t.showname,
+					t.department ,
+					t.avail,
+					t.isAdmin
+		FROM userinfo t,
+		     userrole ur
+		<where>
+			t.id = ur.userid and
+			t.avail = #{avail}
+			<if test="roleId != '' and roleId !=null">
+				and roleId like #{roleId}
+			</if>
+		</where>     
+	</select>
+	
+	<select id="selectAll" resultType="UserInfo">
+		SELECT  t.id,
+			    t.username,
+				t.showname,
+				t.password,
+				t.department ,
+				t.avail,
+				t.isAdmin,
+				t.encPassword 
+		FROM userinfo t
+	</select>
+</mapper>

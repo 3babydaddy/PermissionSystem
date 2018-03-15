@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.department.persistence.DepartmentCreateMapper">
+
+	<insert id="insertDepartmentInfo" parameterType="DepartmentInfo"  useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO departmentinfo (
+			name,
+			higherDepart
+    	) 
+    	VALUES 
+    	(
+		 #{name,jdbcType=VARCHAR},
+		 #{higherDepart,jdbcType=VARCHAR}
+		)
+    </insert>
+    
+    <insert id="insertDepartmentResouces">
+    	INSERT INTO departmentresource (
+			resourceid,
+			departmentid,
+			systemid
+    	) 
+    	VALUES 
+    	<foreach item="item" index="index" collection="infos" open="(" separator="),(" close=")">
+             #{item.resourceid,jdbcType=VARCHAR},
+			 #{depart,jdbcType=VARCHAR},
+			  #{system,jdbcType=VARCHAR}
+         </foreach>
+    </insert>
+    
+   	<delete id="deleteDepartmentResouces">
+        DELETE
+          FROM departmentresource
+          WHERE  departmentid = #{depart,jdbcType=NUMERIC}
+                 AND systemid =  #{system,jdbcType=NUMERIC}
+    </delete>
+    
+</mapper>

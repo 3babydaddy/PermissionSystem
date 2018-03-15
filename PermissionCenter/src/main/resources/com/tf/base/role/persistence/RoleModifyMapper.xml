@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.role.persistence.RoleModifyMapper">
+	<select id="getRoleInfoById" resultType="RoleInfo">
+		SELECT id,
+						name,
+						systemid,
+						avail
+		FROM roleinfo
+	   WHERE id = #{id}
+	</select>
+    
+    <update id="modifyRoleInfo" parameterType="RoleInfo">
+        UPDATE roleinfo
+               SET name = #{info.name,jdbcType=VARCHAR},
+               			avail = #{info.avail,jdbcType=VARCHAR}
+         WHERE id =  #{info.id,jdbcType=VARCHAR}
+    </update>
+    <update id="modifyavail" parameterType="RoleInfo">
+        UPDATE roleinfo
+               SET 
+               	avail = #{info.avail,jdbcType=VARCHAR}
+         WHERE id =  #{info.id,jdbcType=VARCHAR}
+    </update>
+</mapper>

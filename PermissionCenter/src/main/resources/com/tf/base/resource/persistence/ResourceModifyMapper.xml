@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.resource.persistence.ResourceModifyMapper">
+    
+    <update id="modifyResourceInfo" parameterType="ResourceInfo">
+        UPDATE resourcesinfo
+               SET resourceurl = #{info.resourceurl,jdbcType=VARCHAR},
+               		 resourcename = #{info.resourcename,jdbcType=VARCHAR},
+               		 type = #{info.type,jdbcType=VARCHAR},
+               		 icon = #{info.icon,jdbcType=VARCHAR},
+               		 sortIndx = #{info.sortIndx,jdbcType=VARCHAR},
+               		 permission = #{info.permission,jdbcType=VARCHAR}
+         WHERE id =  #{info.id,jdbcType=VARCHAR}
+    </update>
+    
+   	<delete id="deleteResourceInfo">
+        DELETE
+          FROM resourcesinfo
+          WHERE  id = #{id,jdbcType=NUMERIC}
+    </delete>
+</mapper>

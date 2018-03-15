@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tf.base.common.persistence.RestMapper">
+	<select id="getUserInfo" resultType="UserInfo">
+		SELECT t.id,
+						 t.username,
+						 t.password,
+						 t.username,
+					     t.showname,
+						 t.department,
+						 t.encPassword,
+						 t.avail,
+						 t.tel
+		FROM userinfo t
+	WHERE t.username = #{user,jdbcType=VARCHAR}
+	      AND EXISTS (select 1 from usersys t1 where t.id=t1.userid
+	      and t1.sysid = #{system,jdbcType=NUMERIC})
+	      AND  t.avail = '0'
+	</select>
+	
+	<select id="getDaprRes" resultType="java.lang.String">
+		SELECT t.resourceid
+		FROM departmentresource t,userinfo t1
+	WHERE t1.username =#{user,jdbcType=NUMERIC}
+	      AND t.systemid =  #{system,jdbcType=NUMERIC}
+	      AND t1.department = t.departmentid
+	</select>
+	
+	<select id="getRoleRes" resultType="java.lang.String">
+		SELECT t.resourceid
+		FROM roleresource t,userrole t1,userinfo t2
+	WHERE t1.userid = t2.id
+	      AND t.systemid =  #{system,jdbcType=NUMERIC}
+	      AND t1.roleid = t.roleid
+	      AND t2.username = #{user,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getRes" resultType="ResourceInfo">
+		SELECT t.id, 
+						t.systemid,
+						t.resourceurl,
+						t.resourcename, 
+						t.resourceorder,
+						t.resourcelevel,
+						t.type,
+						t.permission, 
+						t.parentid as _parentId
+		FROM resourcesinfo t
+	WHERE t.id in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+             #{item,jdbcType=VARCHAR}
+         </foreach>
+	</select>
+	
+	<select id="checkPassword" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM userinfo
+	   WHERE username = #{userName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR} and encPassword = #{encPassword,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="modifyPassword">
+        UPDATE userinfo
+               SET password = #{password,jdbcType=VARCHAR},
+               encPassword = #{encPassword,jdbcType=VARCHAR}
+         WHERE username = #{userName,jdbcType=VARCHAR}
+    </update>
+    <update id="modifyPasswordAndTel">
+        UPDATE userinfo
+               SET password = #{password,jdbcType=VARCHAR},
+               encPassword = #{encPassword,jdbcType=VARCHAR},
+               tel = #{tel,jdbcType=VARCHAR},
+               showname = #{showName,jdbcType=VARCHAR}
+         WHERE username = #{userName,jdbcType=VARCHAR}
+    </update>
+    
+    <select id="getSystemUserInfo" resultType="SystemUserInfo">
+		SELECT t.username,
+			   t.showname
+		FROM userinfo t
+	WHERE EXISTS (select 1 from usersys t1 where t.id=t1.userid
+	      and t1.sysid = #{system,jdbcType=NUMERIC})
+	</select>
+	
+</mapper>
