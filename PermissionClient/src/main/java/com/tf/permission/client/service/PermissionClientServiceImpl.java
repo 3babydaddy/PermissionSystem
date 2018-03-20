@@ -355,4 +355,52 @@ public class PermissionClientServiceImpl implements PermissionClientService {
 		Set<String> result = new HashSet<String>(rolesList);
 		return result;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tf.permission.client.service.PermissionClientService#addUserCache(
+	 * java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean addUserCache(String key, String value) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/PermissionCenter/common/cacheAdd/").append(key).append("/").append(value);
+		String target = getTarget(sb.toString());
+		String result = HttpClientUtils.getDataStringByGetMethod(target);
+		return result.equals("1") ? true : false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tf.permission.client.service.PermissionClientService#getUserCache(
+	 * java.lang.String)
+	 */
+	@Override
+	public String getUserCache(String key) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/PermissionCenter/common/cacheGet/").append(key);
+		String target = getTarget(sb.toString());
+		return HttpClientUtils.getDataStringByGetMethod(target);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tf.permission.client.service.PermissionClientService#clearUserCache(
+	 * java.lang.String)
+	 */
+	@Override
+	public boolean clearUserCache(String key) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/PermissionCenter/common/cacheClear/").append(key);
+		String target = getTarget(sb.toString());
+		String result = HttpClientUtils.getDataStringByGetMethod(target);
+		return result.equals("1") ? true : false;
+	}
+
 }

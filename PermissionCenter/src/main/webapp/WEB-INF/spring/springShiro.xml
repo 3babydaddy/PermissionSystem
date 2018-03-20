@@ -111,6 +111,10 @@
                 /user/queryUserInfosByRoleId/** = anon
                 /user/queryRoles/** = anon
                 /user/queryRoleInfos/** = anon
+                /user/queryRoleInfos/** = anon
+                /common/cacheAdd/** = anon
+                /common/cacheGet/** = anon
+                /common/cacheClear/** = anon
                 /dept/queryAllDepartments/** = anon
                 /user/** = authc
                 /logout = logout

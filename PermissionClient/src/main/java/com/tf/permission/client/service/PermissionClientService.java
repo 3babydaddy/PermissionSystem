@@ -130,4 +130,29 @@ public interface PermissionClientService {
 	 * @return 权限集合
 	 */
 	public Set<String> findRolesByUserIdSystemId(String userId, String systemId);
+
+	/**
+	 * 向权限中心的redis数据库加入用户缓存
+	 * 
+	 * @param key
+	 * @param flag
+	 * @return
+	 */
+	boolean addUserCache(String key, String flag);
+
+	/**
+	 * 从权限中心的redis数据库取出用户缓存
+	 * 
+	 * @param key
+	 * @return
+	 */
+	String getUserCache(String key);
+
+	/**
+	 * 从权限中心的redis数据库清除用户缓存
+	 * 
+	 * @param key
+	 * @return
+	 */
+	boolean clearUserCache(String key);
 }
