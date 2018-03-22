@@ -24,8 +24,8 @@ $(document).ready(function() {
 	
 	$("#treeSaveBtn").click(function() {
 		
-		var system = $("#systemSel").combobox('getValue');
-		
+		//var system = $("#systemSel").combobox('getValue');
+		var system = $("#systemId").val();
 		var selectedIds = getSelectIds();
 		
 		if (!treeType) {

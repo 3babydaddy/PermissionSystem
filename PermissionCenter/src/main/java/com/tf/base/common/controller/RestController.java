@@ -2,6 +2,7 @@ package com.tf.base.common.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -219,8 +220,8 @@ public class RestController {
 	
 	@RequestMapping(value="/dept/queryAllDepartments",method = RequestMethod.GET)
 	@ResponseBody
-	public List<DepartmentInfo> queryAllDepartments() {
-		return departmentQueryMapper.getAllDepartmentInfo();
+	public List<DepartmentInfo> queryAllDepartments(String systemId) {
+		return departmentQueryMapper.getAllDepartmentInfo(systemId);
 	}
 	
 	@RequestMapping(value="/updatePassword" , method = RequestMethod.GET)

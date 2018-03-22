@@ -1,6 +1,5 @@
 package com.tf.base.department.controller;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -43,17 +42,18 @@ public class DepartmentModifyController {
 	private LogService  logService;
 	
 	@RequestMapping(value = "/department/departmentmodify", method = RequestMethod.GET)
-	public String init(Model model, String depId) {
+	public String init(String systemId, Model model, String depId) {
 		
 		DepartmentInfo info = null;
 		if(!StringUtils.isEmpty(depId)){
 			info = departmentModifyMapper.getDepartmentInfoById(depId);
 		}
-		List<Map<String, String>> systemList = loadSysInfoService.getDropDownList("");
+		List<Map<String, String>> systemList = loadSysInfoService.getDropDownList(systemId);
 		
 		model.addAttribute("systemList", systemList);
 		
 		model.addAttribute("departmentInfo", info);
+		model.addAttribute("systemId", systemId);
 		
 		return "department/depModify";
 	}
@@ -89,7 +89,7 @@ public class DepartmentModifyController {
 					deptName = diold.getName();
 					parentDeptId = diold.getHigherDepart();
 				}
-				
+				info.setHigherDepart(StringUtils.isEmpty(info.getHigherDepart())?null:info.getHigherDepart());
 				int result = departmentModifyMapper.modifyDepartmentInfo(info);
 				loadDeprInfoService.reloadParamManager();
 				

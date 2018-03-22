@@ -13,7 +13,7 @@
 			<table cellspacing="15px">
 				<tr>
 					<td align="right">系统名称：
-						<select class="easyui-combobox" id="systemSel" style="width:120px;" data-options="editable:false">
+						<select class="easyui-combobox" id="systemSel" style="width:120px;" data-options="editable:false" disabled="disabled">
 							<c:forEach var="it" items="${systemList}">
                                 <option value="${it.value}" ${it.showSel}>${it.showMsg}</option>
                             </c:forEach>
@@ -28,6 +28,5 @@
 		
 		<ul id="recTree" class="ztree" ></ul>
 	</div>
-	
 </body>
 </html>

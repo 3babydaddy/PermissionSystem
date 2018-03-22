@@ -15,6 +15,15 @@
 			<table cellspacing="15px">
 				<tr>
 					<td align="right">部门名称：<input class="easyui-textbox" type="text" id="nameTxt" ></input></td>
+					<td align="right">所属系统：</td>
+					<td>
+						<select class="easyui-combobox" id="systemTxt" style="width:175px;" data-options="editable:false">
+								<c:forEach var="systemInfo" items="${systemInfoList}">
+									<option value="${systemInfo.id}" <c:if test="${systemId == systemInfo.id }"> selected="selected"</c:if>>${systemInfo.name}</option>
+								</c:forEach>
+								
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2">

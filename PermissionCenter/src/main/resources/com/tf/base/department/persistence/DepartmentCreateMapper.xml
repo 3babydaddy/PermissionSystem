@@ -12,7 +12,7 @@
     	VALUES 
     	(
 		 #{name,jdbcType=VARCHAR},
-		 #{higherDepart,jdbcType=VARCHAR}
+		 #{higherDepart,jdbcType=NUMERIC}
 		)
     </insert>
     
@@ -28,6 +28,18 @@
 			 #{depart,jdbcType=VARCHAR},
 			  #{system,jdbcType=VARCHAR}
          </foreach>
+    </insert>
+    
+    <insert id="insertDepartmentResouce">
+    	INSERT INTO departmentresource (
+			departmentid,
+			systemid
+    	) 
+    	VALUES 
+    	(
+			 #{departId,jdbcType=VARCHAR},
+			 #{systemId,jdbcType=VARCHAR}
+		)
     </insert>
     
    	<delete id="deleteDepartmentResouces">

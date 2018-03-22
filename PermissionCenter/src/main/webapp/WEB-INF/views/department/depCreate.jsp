@@ -12,7 +12,7 @@
 	<div style="margin:20px 0;"></div>
 	<div class="easyui-panel" title="部门信息" style="width:95%">
 		<div style="padding:10px 60px 20px 60px">
-		<form id="sysFrm" modelAttribute="departmentInfo" method="post">
+		<form id="sysFrm" modelAttribute="" method="post">
 	    	<table cellpadding="10" style="width: 80%">
 	    		<tr>
 	    			<td>名称</td>
@@ -21,22 +21,28 @@
 	    			</td>
 	    			<td>上级部门</td>
 	    			<td >
-	    				<td >
-	    				<input  type="text" id="higherDepart" value="" readonly value=""  onclick="showMenu(); return false;"></input>
-							</li>
-							<div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #fff;border:1px solid #95B8E7;">
-								<ul id="parentDepartMent" class="ztree" style="margin-top:0; width:160px;"></ul>
-							</div>
+    					<input  type="text" id="higherDepart" value="" readonly value=""  onclick="showMenu(); return false;"></input>
+						</li>
+						<div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #fff;border:1px solid #95B8E7;">
+							<ul id="parentDepartMent" class="ztree" style="margin-top:0; width:160px;"></ul>
+						</div>
 	    			</td>
-	    			</td>
-	    			</td>
-	    			</td>
+	    			<td align="right">所属系统：</td>
+	    			<td>
+						<select class="easyui-combobox"  style="width:175px;" data-options="editable:false" disabled="disabled">
+								<c:forEach var="systemInfo" items="${systemInfoList}">
+									<option value="${systemInfo.id}"  <c:if test="${systemId == systemInfo.id }"> selected="selected"</c:if>>${systemInfo.name}</option>
+								</c:forEach>
+								
+						</select>
+					</td>
 	    		</tr>
 	    		<tr>
 	    			<td colspan="6"></td>
 	    		</tr>
 	    	</table>
 	    		<input type="hidden" id="higherDepartHid" value = "${departmentInfo.higherDepart}">
+	    		<input type="hidden" id="systemId" value = "${systemId}">
 	    	</form>
 	    </div>
 	</div>

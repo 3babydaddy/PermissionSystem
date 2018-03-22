@@ -73,7 +73,9 @@ $(document).ready(function() {
 	
 	$("#gobackBtn").click( function(){
 		
-		window.history.go(-1);
+		//window.history.go(-1);
+		var systemId = $("#systemId").val();
+   	 	window.location.href= 'query?systemId='+systemId;
 	})
 	
 	$("#submitBtn").click(function (){
@@ -92,10 +94,11 @@ $(document).ready(function() {
 		var name = $("#nameTxt").val();
 		var higherDepart = $("#higherDepartHid").val();
 		var avail = $("#availSel").combobox('getValue');
+		var systemId = $("#systemId").val();
 		
 		var selectedIds = getSelectIds();
 		
-		var system = $("#systemSel").combobox('getValue');
+		var system = $("#systemSel").val();
 		
 		$.ajax({
 			url : "departmentmodify",
@@ -119,7 +122,7 @@ $(document).ready(function() {
 				
 				alert("提交成功");
 				
-				window.location.href= 'query';
+				window.location.href= 'query?systemId='+systemId;
 			}
 		});
 		
@@ -134,6 +137,7 @@ function init() {
 		type : "POST",
 		data : {
 			name : '',
+			systemId : $("#systemId").val(),
 			avail:'0'
 		},
 		success : function(data) {
@@ -163,9 +167,9 @@ function validate() {
 	if (name == null || trim(name) == "") {
 		return "名称";
 	}
-	if (higherDepart == null || trim(higherDepart) == "") {
-		return "上级部门";
-	}
+//	if (higherDepart == null || trim(higherDepart) == "") {
+//		return "上级部门";
+//	}
 	
 	return "";
 }

@@ -14,4 +14,6 @@ public interface DepartmentCreateMapper {
 	public int insertDepartmentResouces(@Param(value="infos")List<DepartmentResource> infos, @Param(value="depart")String depart,@Param(value="system")String system);
 	
 	public int deleteDepartmentResouces(@Param(value="depart")String depart,@Param(value="system")String system);
+	
+	public int insertDepartmentResouce(@Param(value="departId")String depart,@Param(value="systemId")String system);
 }

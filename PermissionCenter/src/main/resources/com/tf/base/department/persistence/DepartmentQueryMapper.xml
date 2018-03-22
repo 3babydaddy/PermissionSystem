@@ -39,7 +39,11 @@
 					t.name,
 					t.higherDepart,
 					t.avail
-		FROM departmentinfo t
+		FROM departmentinfo t, departmentresource s 
+		where t.id = s.departmentid
+         <if test="systemId != '' and systemId !=null">
+           and s.systemid = #{systemId}  
+         </if>
   ORDER BY  t.id desc
 	</select>
 	
@@ -110,5 +114,20 @@
 	           and t.higherDepart = #{id}  
 	        </if>
 	     </where>
+	</select>
+	
+	<select id="getDepartmentInfosWithParentsByCondition" resultType="DepartmentInfo">
+    	SELECT DISTINCT t.id,
+					t.name,
+					t.higherDepart,
+					t.avail
+		FROM departmentinfo t, departmentresource s 
+		where t.id = s.departmentid
+ 		<if test="params.systemId != '' and params.systemId != null">  
+           and s.systemid =  #{params.systemId}  
+        </if>
+        <if test="params.name != '' and params.name != null">  
+           and t.name like concat('%',  #{params.name}, '%')  
+        </if>
 	</select>
 </mapper>

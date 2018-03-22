@@ -33,18 +33,20 @@ $(document).ready(function() {
 	})
 	
 	$("#addBtn").click(function (){
-		
-		window.location.href= 'departmentcreate';
+		var systemId = $("#systemTxt").combobox('getValue');
+		window.location.href= 'departmentcreate?systemId='+systemId;
 	})
 })
 
 function loadData() {
 	var name = $("#nameTxt").val();
+	var systemId = $("#systemTxt").combobox('getValue');
 	$.ajax({
 		url : "../department/departmentquery",
 		type : "POST",
 		data : {
-			name : name
+			name : name,
+			systemId : systemId 
 		},
 		success : function(data) {
 			$.each(data,function(i,o){
@@ -77,7 +79,8 @@ function editDepartment() {
      if(value == ""){
     	 alert("请选择部门");
      }else{
-    	 window.location.href= 'departmentmodify?depId=' + value;
+    	 var systemId = $("#systemTxt").combobox('getValue');
+    	 window.location.href= 'departmentmodify?depId=' + value+'&systemId='+systemId;
      }
 //     if(confirm("确认删除 节点 -- " + treeNode.name + " 吗？"))
      

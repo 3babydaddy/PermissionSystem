@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tf.base.common.constants.ConstantsUtils;
 import com.tf.base.common.domain.NodeInfo;
+import com.tf.base.common.domain.SystenLogInfo;
 import com.tf.base.common.persistence.CommonMapper;
 import com.tf.base.common.redis.dao.RedisDao;
 import com.tf.base.department.domain.DepartmentResource;
 import com.tf.base.department.persistence.DepartmentCreateMapper;
 import com.tf.base.resource.domain.ResourceInfo;
 import com.tf.base.resource.persistence.ResourceQueryMapper;
+import com.tf.base.user.domain.UserInfo;
 
 @Controller
 public class CommonController {
@@ -88,7 +91,9 @@ public class CommonController {
 		departmentCreateMapper.deleteDepartmentResouces(department, system);
 
 		if (drInfo.size() > 0) {
-			departmentCreateMapper.insertDepartmentResouces(drInfo, department, system);
+			departmentCreateMapper.insertDepartmentResouces(drInfo,department,system);
+		}else{
+			departmentCreateMapper.insertDepartmentResouce(department,system);
 		}
 
 		return 0;

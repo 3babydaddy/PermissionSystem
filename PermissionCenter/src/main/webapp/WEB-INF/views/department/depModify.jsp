@@ -59,5 +59,6 @@
 	<input type="hidden" id="higherDepartHid" value = "${departmentInfo.higherDepart}">
     <input type="hidden" id="nameHid" value = "${departmentInfo.name}">
     <input type="hidden" id="idHid" value = "${departmentInfo.id}">
+    <input type="hidden" id="systemId" value = "${systemId}">
 </body>
 </html>

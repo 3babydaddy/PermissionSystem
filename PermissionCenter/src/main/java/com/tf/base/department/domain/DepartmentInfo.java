@@ -6,6 +6,7 @@ public class DepartmentInfo {
 	private String name;
 	private String higherDepart;
 	private String avail;
+	private String systemId;
 	
 	public String getName() {
 		return name;
@@ -57,6 +58,11 @@ public class DepartmentInfo {
 	public void setAvail(String avail) {
 		this.avail = avail;
 	}
-	
+	public String getSystemId() {
+		return systemId;
+	}
+	public void setSystemId(String systemId) {
+		this.systemId = systemId;
+	}
 	
 }

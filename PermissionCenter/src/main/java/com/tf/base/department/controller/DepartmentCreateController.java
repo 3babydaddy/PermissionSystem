@@ -7,10 +7,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.util.StringUtils;
 import com.tf.base.common.constants.ConstantsUtils;
 import com.tf.base.common.domain.SystenLogInfo;
 import com.tf.base.common.service.LoadDeprInfoService;
@@ -18,6 +20,8 @@ import com.tf.base.common.service.LogService;
 import com.tf.base.department.domain.DepartmentInfo;
 import com.tf.base.department.persistence.DepartmentCreateMapper;
 import com.tf.base.department.persistence.DepartmentQueryMapper;
+import com.tf.base.system.domain.SystemInfo;
+import com.tf.base.system.persistence.SystemQueryMapper;
 import com.tf.base.user.domain.UserInfo;
 
 @Controller
@@ -30,25 +34,29 @@ public class DepartmentCreateController {
 	@Autowired DepartmentQueryMapper departmentQueryMapper;
 	@Autowired
 	private LoadDeprInfoService loadDeprInfoService;
-	
+	@Autowired
+	private SystemQueryMapper systemQueryMapper;
 	@Autowired
 	private LogService logService;
 	
 	@RequestMapping(value = "/department/departmentcreate", method = RequestMethod.GET)
-	public String init() {
+	public String init(String systemId, ModelMap modelMap) {
 		
+		List<SystemInfo> systemInfoList = systemQueryMapper.getAllSystemInfo();
+		modelMap.put("systemInfoList", systemInfoList);
+		modelMap.put("systemId", systemId);
 		return "department/depCreate";
 	}
 	
 	@RequestMapping(value = "/department/departmentcreate", method = RequestMethod.POST)
 	@ResponseBody
-	public int create(String name,String higherDepart/*,String selectedIds,String system*/,HttpSession session) {
+	public int create(String name,String higherDepart,String systemId/*,String selectedIds,String system*/,HttpSession session) {
 		
 		DepartmentInfo info = new DepartmentInfo();
 		
 		info.setName(name);
-		info.setHigherDepart(higherDepart);
-		
+		info.setHigherDepart(StringUtils.isEmpty(higherDepart) ? null : higherDepart);
+		info.setSystemId(systemId);
 		DepartmentInfo queryResult = departmentQueryMapper.getDepartmentInfosByName(name);
 		
 		if (queryResult == null) {
@@ -56,6 +64,8 @@ public class DepartmentCreateController {
 			
 			loadDeprInfoService.reloadParamManager();
 			
+			//插入部门与系统关系
+			departmentCreateMapper.insertDepartmentResouce(info.getId(), systemId);
 			
 			//增加日志
 			UserInfo loginUser = (UserInfo) session.getAttribute("user");

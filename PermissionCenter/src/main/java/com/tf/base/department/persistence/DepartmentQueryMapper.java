@@ -1,7 +1,6 @@
 package com.tf.base.department.persistence;
 
 import java.util.List;
-import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +13,7 @@ public interface DepartmentQueryMapper {
 	
 	List<DepartmentInfo> getDepartmentInfo(@Param(value="start")int start,@Param(value="params")QueryParams params);
 	
-	List<DepartmentInfo> getAllDepartmentInfo();
+	List<DepartmentInfo> getAllDepartmentInfo(@Param("systemId") String systemId);
 	
 	List<DepartmentInfo> getDepartmentInfosByNameLike(@Param(value="name") String name);
 	
@@ -24,5 +23,7 @@ public interface DepartmentQueryMapper {
 	
 	List<DepartmentInfo> getDepartmentInfoById(@Param(value="id") String id);
 	List<DepartmentInfo> getDepartmentInfoByParentId(@Param(value="id") String id);
+	
+	List<DepartmentInfo> getDepartmentInfosWithParentsByCondition(@Param(value="params") DepartmentInfo departmentInfo);
 
 }

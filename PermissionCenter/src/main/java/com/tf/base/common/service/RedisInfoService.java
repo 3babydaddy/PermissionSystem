@@ -116,7 +116,7 @@ public class RedisInfoService {
 	public JSONObject initDeptJson(){
 		redisDao.del(CommonConstants.PERMISSION_DEPTINFO);
 		JSONObject dept = new JSONObject();
-		List<DepartmentInfo> list = departmentQueryMapper.getAllDepartmentInfo();
+		List<DepartmentInfo> list = departmentQueryMapper.getAllDepartmentInfo("");
 		for (DepartmentInfo item : list) {
 			
 			dept.put(item.getId(), item);

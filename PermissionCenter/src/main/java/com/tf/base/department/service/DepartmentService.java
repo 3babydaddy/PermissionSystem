@@ -86,4 +86,23 @@ public class DepartmentService {
 			}
 		}
 	}
+	
+	/**
+	 * 根据部门名称和系统id查询部门的所有上级机构（包含本部门）
+	 * @param name 部门名称
+	 * @return
+	 */
+	public List<DepartmentInfo> getDepartmentInfosWithParentsByCondition(DepartmentInfo info){
+		
+		
+		List<DepartmentInfo> departmentInfoList = new ArrayList<DepartmentInfo>();
+		List<DepartmentInfo> queryDepartmentInfo = departmentQueryMapper.getDepartmentInfosWithParentsByCondition(info);
+		departmentInfoList.addAll(queryDepartmentInfo);
+		if (queryDepartmentInfo != null && !queryDepartmentInfo.isEmpty()) {
+			for (DepartmentInfo departmentInfo : queryDepartmentInfo) {
+				queryParemntDepartmentWithParentsInfo(departmentInfo, departmentInfoList);
+			}
+		}
+		return departmentInfoList;
+	}
 }
