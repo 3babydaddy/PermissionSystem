@@ -7,6 +7,7 @@
 	<insert id="insertUserInfo" parameterType="UserInfo"  useGeneratedKeys="true" keyProperty="id">
     	INSERT INTO userinfo (
 			username,
+			password,
 			showname,
 			department,
 			avail,
@@ -16,6 +17,7 @@
     	VALUES 
     	(
 		 #{username,jdbcType=VARCHAR},
+		 #{password,jdbcType=VARCHAR},
 		 #{showname,jdbcType=VARCHAR},
 		 #{department,jdbcType=VARCHAR},
 		 #{avail,jdbcType=VARCHAR},
