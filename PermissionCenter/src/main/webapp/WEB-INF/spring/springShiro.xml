@@ -109,6 +109,7 @@
                 /user/getsystemUser/** = anon
                 /user/queryUserInfosByDepartId/** = anon
                 /user/queryUserInfosByRoleId/** = anon
+                /sysRest/** = anon
                 /user/queryRoles/** = anon
                 /user/queryRoleInfos/** = anon
                 /user/queryRoleInfos/** = anon
