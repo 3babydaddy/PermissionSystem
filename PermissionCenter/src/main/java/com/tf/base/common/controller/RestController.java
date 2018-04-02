@@ -273,9 +273,9 @@ public class RestController {
 	 *            用户id
 	 * @return 系统列表集合
 	 */
-	@RequestMapping(value = "/sysRest/queryAllSystemsByUserId", method = RequestMethod.GET)
+	@RequestMapping(value = "/sysRest/queryAllSystemsByUserId/{userId}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<SystemInfo> queryAllSystemsByUserId(String userId) {
+	public List<SystemInfo> queryAllSystemsByUserId(@PathVariable String userId) {
 		List<SystemInfo> list = systemQueryMapper.getSystemInfoByUserId(userId);
 		return list;
 	}

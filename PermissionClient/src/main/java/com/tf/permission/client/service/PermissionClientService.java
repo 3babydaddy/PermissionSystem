@@ -7,6 +7,7 @@ import com.tf.permission.client.entity.DepartmentInfo;
 import com.tf.permission.client.entity.LogInfo;
 import com.tf.permission.client.entity.ResourceInfo;
 import com.tf.permission.client.entity.RoleInfo;
+import com.tf.permission.client.entity.SystemInfo;
 import com.tf.permission.client.entity.SystemUserInfo;
 import com.tf.permission.client.entity.User;
 
@@ -155,4 +156,24 @@ public interface PermissionClientService {
 	 * @return
 	 */
 	boolean clearUserCache(String key);
+	
+	
+	/**
+	 * 
+	 * 查询用户所属的系统列表用于统一入口系统展示
+	 * 
+	 * @param userId
+	 *            用户id
+	 * @return 系统列表集合
+	 */
+	List<SystemInfo> queryAllSystemsByUserId(String userId);
+	
+	/**
+	 * 
+	 * 查询系统列表用于统一入口系统展示
+	 * 
+	 * @return 列表集合
+	 */
+	List<SystemInfo> queryAllSystems();
+	
 }

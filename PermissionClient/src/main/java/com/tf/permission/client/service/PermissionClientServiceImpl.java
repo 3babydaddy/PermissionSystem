@@ -15,6 +15,7 @@ import com.tf.permission.client.entity.DepartmentInfo;
 import com.tf.permission.client.entity.LogInfo;
 import com.tf.permission.client.entity.ResourceInfo;
 import com.tf.permission.client.entity.RoleInfo;
+import com.tf.permission.client.entity.SystemInfo;
 import com.tf.permission.client.entity.SystemUserInfo;
 import com.tf.permission.client.entity.User;
 import com.tf.permission.client.utils.HttpClientUtils;
@@ -401,6 +402,25 @@ public class PermissionClientServiceImpl implements PermissionClientService {
 		String target = getTarget(sb.toString());
 		String result = HttpClientUtils.getDataStringByGetMethod(target);
 		return result.equals("1") ? true : false;
+	}
+
+	@Override
+	public List<SystemInfo> queryAllSystemsByUserId(String userId) {
+		if (!StringUtils.isEmpty(userId)) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("/PermissionCenter/sysRest/queryAllSystemsByUserId/").append(userId);
+			String target = getTarget(sb.toString());
+			return HttpClientUtils.getDataListByGetMethod(target, SystemInfo.class);
+		}
+		return new ArrayList<SystemInfo>();
+	}
+
+	@Override
+	public List<SystemInfo> queryAllSystems() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/PermissionCenter/sysRest/queryAllSystems");
+		String target = getTarget(sb.toString());
+		return HttpClientUtils.getDataListByGetMethod(target, SystemInfo.class);
 	}
 
 }
