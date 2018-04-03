@@ -4,7 +4,7 @@
 	<groupId>com.tf</groupId>
 	<artifactId>permission-client</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4.6</version>
+	<version>1.4.6-SNAPSHOT</version>
 	<properties>
 		<org.quartz-scheduler.version>2.2.3</org.quartz-scheduler.version>
 		<shiro.version>1.2.4</shiro.version>
@@ -137,12 +137,17 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>  
-	    <repository>  
-	        <id>3rdparty</id>  
-	        <name>Packaging Release Repository</name>  
-	        <url>http://192.168.71.170:5566/nexus/content/repositories/thirdparty/</url>  
-	    </repository>  
+	<distributionManagement>
+		<repository>
+			<id>3rdparty</id>
+			<name>Packaging Release Repository</name>
+			<url>http://192.168.71.170:5566/nexus/content/repositories/thirdparty/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>Snapshots</id>
+			<url>http://192.168.71.170:5566/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 	<!-- <distributionManagement>
 
