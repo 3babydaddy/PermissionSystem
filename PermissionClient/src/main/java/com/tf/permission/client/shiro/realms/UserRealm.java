@@ -11,8 +11,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
 import com.tf.permission.client.entity.User;
@@ -29,6 +29,8 @@ public class UserRealm extends AuthorizingRealm {
 	@Autowired
     private PermissionClientService permissionService;
     
+	@Value("${permissionClient.systemid}")
+	private String systemid; 
 
     public void setPermissionService(PermissionClientService permissionService) {
 		this.permissionService = permissionService;
@@ -40,7 +42,7 @@ public class UserRealm extends AuthorizingRealm {
         User user = permissionService.findUserByUsername(username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setStringPermissions(permissionService.findPermissionsByUserName(username));
-        authorizationInfo.setRoles(permissionService.findRolesByUserIdSystemId(user.getId().toString(), ""));
+        authorizationInfo.setRoles(permissionService.findRolesByUserIdSystemId(user.getId().toString(), systemid));
         return authorizationInfo;
     }
 
