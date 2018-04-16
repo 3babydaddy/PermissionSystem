@@ -113,10 +113,11 @@
 					t.department ,
 					t.avail,
 					t.isAdmin,
-					t.encPassword 
-		FROM userinfo t
+					t.encPassword,
+					d.name as departmentShow
+		FROM userinfo t, departmentinfo d
 		   <where> 
-		 	1=1
+		 		t.department = d.id
 	       <if test="params.id != ''  and params.id!=null ">  
 	            and t.id = #{params.id}  
 	        </if>  
@@ -138,10 +139,11 @@
 					t.department ,
 					t.avail,
 					t.isAdmin,
-					t.encPassword
-		FROM userinfo t
+					t.encPassword,
+					d.name as departmentShow
+		FROM userinfo t, departmentinfo d
 		   <where> 
-		 	1=1
+		 		t.department = d.id
 	       <if test="params.id != ''  and params.id!=null ">  
 	            and t.id = #{params.id}  
 	        </if>  

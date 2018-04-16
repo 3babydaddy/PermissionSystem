@@ -12,9 +12,11 @@
 						 t.department,
 						 t.encPassword,
 						 t.avail,
-						 t.tel
-		FROM userinfo t
-	WHERE t.username = #{user,jdbcType=VARCHAR}
+						 t.tel,
+						 d.name as departmentShow
+		FROM userinfo t, departmentinfo d
+	WHERE t.department = d.id 
+		  AND t.username = #{user,jdbcType=VARCHAR}
 	      AND EXISTS (select 1 from usersys t1 where t.id=t1.userid
 	      and t1.sysid = #{system,jdbcType=NUMERIC})
 	      AND  t.avail = '0'
